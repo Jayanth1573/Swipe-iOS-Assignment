@@ -46,6 +46,53 @@ class ProductService {
             )
         }
     }
+    
+    func addProduct(name: String, type: String, price: Double, tax: Double, image: UIImage?) async throws -> Bool {
+        let url = URL(string: "https://app.getswipe.in/api/public/add")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        var data = Data()
+        
+        // Add text fields
+        let textFields: [String: String] = [
+            "product_name": name,
+            "product_type": type,
+            "price": String(price),
+            "tax": String(tax)
+        ]
+        
+        for (key, value) in textFields {
+            data.append("--\(boundary)\r\n".data(using: .utf8)!)
+            data.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+            data.append("\(value)\r\n".data(using: .utf8)!)
+        }
+        
+        // Add image if available
+        if let image = image, let imageData = image.jpegData(compressionQuality: 0.8) {
+            data.append("--\(boundary)\r\n".data(using: .utf8)!)
+            data.append("Content-Disposition: form-data; name=\"files[]\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+            data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+            data.append(imageData)
+            data.append("\r\n".data(using: .utf8)!)
+        }
+        
+        data.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        request.httpBody = data
+        
+        let (responseData, _) = try await URLSession.shared.data(for: request)
+        
+        if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any],
+           let success = json["success"] as? Bool {
+            return success
+        }
+        
+        return false
+    }
 }
 
 

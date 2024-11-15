@@ -42,7 +42,9 @@ struct ProductListView: View {
                 }
             }
             .sheet(isPresented: $isShowingAddProduct) {
-                Text("Add product view")
+                AddProductView(onProductAdded: {
+                    viewModel.fetchProducts()
+                })
             }
         }
         .onAppear {
