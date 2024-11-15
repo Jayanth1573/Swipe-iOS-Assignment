@@ -15,6 +15,7 @@ struct AddProductView: View {
     var body: some View {
         NavigationView {
             Form {
+                // MARK: New Image
                 Section(header: Text("Product Image")) {
                     ZStack {
                         if let image = viewModel.selectedImage {
@@ -37,6 +38,7 @@ struct AddProductView: View {
                     }
                 }
                 
+                // MARK: New Properties
                 Section(header: Text("Product Details")) {
                     TextField("Product Name", text: $viewModel.productName)
                     
@@ -53,6 +55,8 @@ struct AddProductView: View {
                         .keyboardType(.decimalPad)
                 }
                 
+                
+                // MARK: Addition button
                 Section {
                     Button(action: {
                         Task {
@@ -66,7 +70,7 @@ struct AddProductView: View {
                         Text("Add Product")
                             .frame(maxWidth: .infinity)
                     }
-                    .disabled(!viewModel.isFormValid)
+//                    .disabled(!viewModel.isFormValid)
                 }
             }
             .navigationTitle("Add Product")

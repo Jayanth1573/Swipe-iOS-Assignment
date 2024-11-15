@@ -29,6 +29,7 @@ class ProductService {
         case failedRequest = "Failed request, status code != 200"
     }
     
+    /// Function to get all the products from GET API
     func fetchProducts() async throws -> [Product] {
         let url = URL(string: "https://app.getswipe.in/api/public/get")!
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -47,6 +48,7 @@ class ProductService {
         }
     }
     
+    /// Function to add new product using multipart request where files(image) are pushed into the API provided at the same time following structure provided in the assignment.
     func addProduct(name: String, type: String, price: Double, tax: Double, image: UIImage?) async throws -> Bool {
         let url = URL(string: "https://app.getswipe.in/api/public/add")!
         var request = URLRequest(url: url)

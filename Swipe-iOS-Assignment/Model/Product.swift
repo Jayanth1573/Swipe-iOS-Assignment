@@ -6,6 +6,7 @@
 //
 import Foundation
 
+    // model product according to structure of endpoint and isFavorite is added with default value of false that doesn't disturb the structure of endpoint
 struct Product: Codable, Identifiable {
     var id: UUID
     var name: String
@@ -33,6 +34,16 @@ struct Product: Codable, Identifiable {
         self.tax = tax
         self.imageUrl = imageUrl
         self.isFavorite = isFavorite
+    }
+    
+    init(from entity: ProductEntity) {
+        self.id = entity.id ?? UUID()
+        self.name = entity.name ?? ""
+        self.type = entity.type ?? ""
+        self.price = entity.price
+        self.tax = entity.tax
+        self.imageUrl = entity.imageUrl ?? ""
+        self.isFavorite = entity.isFavorite
     }
     
 }

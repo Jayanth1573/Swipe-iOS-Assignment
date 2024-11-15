@@ -22,6 +22,7 @@ class AddProductViewModel: ObservableObject {
     
     let productTypes = ["Food", "Fashion", "Phone","Electronics", "Home", "Beauty", "Sports", "Other"]
     
+    // checking is form valid / none of the required properties are empty
     var isFormValid: Bool {
         !productName.isEmpty && !price.isEmpty && !tax.isEmpty &&
         Double(price) != nil && Double(tax) != nil

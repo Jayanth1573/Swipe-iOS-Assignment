@@ -13,6 +13,7 @@ struct ProductCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            // MARK: Image
             Group {
                 if let url = URL(string: product.imageUrl), !product.imageUrl.isEmpty {
                     AsyncImage(url: url) { phase in
@@ -38,6 +39,8 @@ struct ProductCard: View {
             .background(Color.gray.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
+            
+            // MARK: properties
             HStack {
                 Text(product.name)
                     .font(.headline)
@@ -68,6 +71,7 @@ struct ProductCard: View {
         .shadow(radius: 5)
     }
     
+    // MARK: Default Image
     private var defaultImage: some View {
         Image("noImage")
             .resizable()
