@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductCard: View {
     let product: Product
     let onFavoriteToggle: () -> Void
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -66,7 +67,9 @@ struct ProductCard: View {
             }
         }
         .padding()
-        .background(Color.white)
+//        .background(Color.gray.opacity(0.2))
+        .background(colorScheme == .dark ? Color.gray.opacity(0.2) : Color.white)
+//        .background(Color.white)
         .cornerRadius(12)
         .shadow(radius: 5)
     }
